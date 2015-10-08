@@ -3,7 +3,7 @@ import random
 
 class Inventory():
 
-    def __init__(self):
+    def __init__(self, **kwargs):
 
         self.INV_SIZE_X = 10
         self.INV_SIZE_Y = 3
