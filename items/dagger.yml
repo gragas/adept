@@ -1,0 +1,10 @@
+- name: Dagger
+- desc: A simple dagger
+- type: 0
+- maxQuantity: 1
+- id: -1
+- baseDamage: 50
+- baseAttackSpeed: 10
+- durabilityPerUse: 0.01
+- critChance: 0.005
+- critMultiplier: 10

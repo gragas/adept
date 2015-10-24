@@ -1,13 +1,21 @@
+import os
+
 import pygame
 
 from buffalo import utils
 from buffalo.scene import Scene
 from buffalo.label import Label
 from buffalo.button import Button
+from buffalo.option import Option
+
+from saves import Saves
+from playerCharacter import PlayerCharacter
+from inventory import Inventory
 
 class Menu(Scene):
 
     def on_escape(self):
+        print(self.characterOption.label.text)
         exit()
 
     def update(self):
@@ -17,8 +25,9 @@ class Menu(Scene):
         pass
 
     def __init__(self):
-        super().__init__()
+        Scene.__init__(self)
         self.BACKGROUND_COLOR = (177, 0, 50, 255)
+        Button.DEFAULT_BG_COLOR = (100, 100, 100, 255)
         self.labels.add(
             Label(
                 (5, 5),
@@ -36,10 +45,10 @@ class Menu(Scene):
         )
         self.buttons.add(
             Button(
-                (utils.SCREEN_W / 2, utils.SCREEN_H / 2 + 100),
+                (10, utils.SCREEN_H - 10),
                 "Create New Character",
-                x_centered=True,
-                y_centered=True,
+                invert_y_pos = True,
+                func=self.go_to_createCharacter
             )
         )        
         self.buttons.add(
@@ -48,6 +57,7 @@ class Menu(Scene):
                 "New Solo Game",
                 x_centered=True,
                 y_centered=True,
+                func=self.go_to_gameTestScene,
             )
         )
         self.buttons.add(
@@ -84,24 +94,39 @@ class Menu(Scene):
                 func=exit,
             )
         )
-        self.buttons.add(
-            Button(
-                (10, utils.SCREEN_H - 10),
-                "Select Character",
-                invert_y_pos=True,
-                func=self.go_to_select_character,
+        self.characterOption = Option(
+                (utils.SCREEN_W / 2, utils.SCREEN_H / 2 + 100),
+                self.getCharacterNames(),
+                x_centered=True,
+                y_centered=True,
             )
-        )
+        self.options.add(self.characterOption)
+    def getCharacterNames(self):
+        characters = list()
+        for character in os.listdir("characters"):
+            if character != ".DS_Store":
+                characters.append(character)
+        if not characters:
+            return ["No Characters"]
+        return characters
 
-    def go_to_select_character(self):
+
+    def go_to_createCharacter(self):
         utils.set_scene(
-            SelectCharacter()
+            CreateCharacter()
         )
-
     def go_to_options(self):
         utils.set_scene(
             Options()
         )
+    def go_to_gameTestScene(self):
+        pc_name = self.characterOption.label.text
+        utils.set_scene(
+            GameTestScene(
+                pc_name
+            )
+        )
 
-from selectcharacter import SelectCharacter
+from createCharacter import CreateCharacter
+from gameTestScene import GameTestScene
 from options import Options
