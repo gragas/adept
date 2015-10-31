@@ -18,6 +18,8 @@ from hotbarUI import HotbarUI
 from subMap import SubMap
 from tradingUI import TradingUI
 from stair import Stair
+from soundEngine import SoundEngine
+from menu import Menu
 
 from playerCharacter import PlayerCharacter
 from friendly import Friendly
@@ -43,6 +45,8 @@ class GameTestScene(Scene):
         self.UIManager.guiScreens.append(hb)
         self.UIManager.alwaysOnGUIs.append(hb)
         self.UIManager.updateGUIs()
+
+        SoundEngine.playMusic("BlipStream.wav")
 
         s = SubMap(10,10,5)
         from tile import Tile 
@@ -84,7 +88,11 @@ class GameTestScene(Scene):
 
     def on_escape(self):
         Saves.store(self.pc)
-        sys.exit()
+        utils.set_scene(
+            Menu()
+        )
+        SoundEngine.stopAllSounds()
+        #sys.exit()
 
     def update(self):
         keys = pygame.key.get_pressed()

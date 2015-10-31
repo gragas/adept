@@ -14,6 +14,8 @@ from inventory import Inventory
 from skill import Skill
 from subMap import SubMap
 
+from soundEngine import SoundEngine
+
 class PlayerCharacter(Character):
 
     DEFAULT_NAME  = "Unnamed PlayerCharacter"
@@ -168,6 +170,11 @@ class PlayerCharacter(Character):
             self.blit_sprite()
 
         self.sprite_counter += utils.delta
+
+        if self.moving_left or self.moving_right or self.moving_down or self.moving_up:
+            SoundEngine.startLoopedSoundEffect("footstep2.wav")
+        else:
+            SoundEngine.stopLoopedSoundEffect("footstep2.wav")
 
         if self.sprite_counter > self.animation_delta:
             self.sprite_counter = 0

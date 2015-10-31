@@ -84,13 +84,9 @@ class Inventory():
 
     def placeItemInHotbar(self, item, pos):
         if isinstance(item,Item):
-            oldItem = self.hotbar[int(pos)]
-            self.hotbar[int(pos)] = item
-            return oldItem
-
-    def placeItemInHotbar(self, item, pos):
-        if isinstance(item,Item):
+            oldItem = self.hotbar[pos[0]]
             self.hotbar[pos[0]] = item
+            return oldItem
 
     def getTotalItemQuantity(self, item):
         """
