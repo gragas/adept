@@ -18,6 +18,8 @@ from hotbarUI import HotbarUI
 from subMap import SubMap
 from tradingUI import TradingUI
 from stair import Stair
+from floatingText import FloatingText
+from floatingText import FloatingTextManager
 
 from playerCharacter import PlayerCharacter
 from friendly import Friendly
@@ -99,10 +101,12 @@ class GameTestScene(Scene):
                 npc.update(self.pc.inventory, self.UIManager)
         self.UIManager.update()
         Camera.update()
+        FloatingTextManager.update()
 
     def blit(self):
         Camera.blitView()
         for npc in self.npcs:
             npc.blit(utils.screen)
         self.pc.blit(utils.screen)
+        FloatingTextManager.blit(utils.screen, (0,0))
         self.UIManager.blit(utils.screen, (0,0))

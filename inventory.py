@@ -1,5 +1,6 @@
 from item import Item
 import random
+from floatingText import FloatingText,FloatingTextManager
 
 class Inventory():
 
@@ -29,6 +30,7 @@ class Inventory():
                 if self.items[x][y] == None and isinstance(item, Item):
                     self.items[x][y] = item
                     return
+
 
     def addItemQuantity(self,item, quantity):
         pass
@@ -84,13 +86,10 @@ class Inventory():
 
     def placeItemInHotbar(self, item, pos):
         if isinstance(item,Item):
-            oldItem = self.hotbar[int(pos)]
-            self.hotbar[int(pos)] = item
-            return oldItem
-
-    def placeItemInHotbar(self, item, pos):
-        if isinstance(item,Item):
+            oldItem = self.hotbar[pos[0]]
             self.hotbar[pos[0]] = item
+            return oldItem
+        
 
     def getTotalItemQuantity(self, item):
         """
@@ -128,3 +127,17 @@ class Inventory():
                 if self.hotbar[x] is not None:
                     self.hotbar[x].update()
 
+    def craftingNotification(self,recipe):
+        offsetY = 0
+        offsetPerNotification = 10
+        for item in recipe.products:
+            item = Item(item)
+            item.quantity = recipe.products[item.name]
+            FloatingTextManager.ACTIVE_FLOATING_TEXTS.append(FloatingText(
+                    "+" + str(item.quantity) + " " + item.name,
+                    (self.playerCharacter.fPos[0], self.playerCharacter.fPos[1] + offsetY),
+                    vert_speed = -1,
+                    hor_speed = -1,
+                    alpha_decay = 5,
+                    lifetime = 35))
+            offsetY += offsetPerNotification

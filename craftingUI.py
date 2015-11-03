@@ -101,6 +101,7 @@ class CraftingUI:
                     newItem = Item(item)
                     newItem.quantity = clickedRecipe.products[item]
                     self.inventory.addItem(newItem)
+                self.inventory.craftingNotification(clickedRecipe)
                 self.inventory.update()
                 self.updateRecipeTable()
                 return
