@@ -1,0 +1,14 @@
+- name: Template
+- desc: A template item.
+- type: 5
+- maxQuantity: 99
+- id: -1
+- baseDamage: 9000
+- baseAttackSpeed: 10
+- durabilityPerUse: 0.01
+- critChance: 0.005
+- critMultiplier: 10
+- questID: 109384
+- bodyPart: head
+- baseProtection: 3
+- resourceType: energy

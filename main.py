@@ -2,8 +2,6 @@ import pygame
 
 from buffalo import utils
 
-from menu import Menu
-
 def main():
     
     while not utils.end:
@@ -16,11 +14,14 @@ if __name__ == "__main__":
     
     if not utils.init(
             caption='Adept',
+            fullscreen=True
     ):
         print('buffalo.utils failed to initialize')
         pygame.quit()
         exit()
     
+    from menu import Menu
+
     utils.set_scene( Menu() )
     
     main()

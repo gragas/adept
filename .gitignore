@@ -1,3 +1,7 @@
+#
+characters/
+
+# Emacs autosaves
 *~
 __pycache__
 
@@ -58,3 +62,5 @@ docs/_build/
 
 # PyBuilder
 target/
+characters/
+maps/

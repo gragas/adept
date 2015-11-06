@@ -1,0 +1,8 @@
+- name: Pickaxe
+- desc: A tool used for mining.
+- type: 1
+- maxQuantity: 1
+- id: 1
+- baseDamage: 100
+- baseAttackSpeed: 1
+- durabilityPerUse: 0.01
