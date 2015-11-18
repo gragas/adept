@@ -3,26 +3,27 @@ import random
 from floatingText import FloatingText,FloatingTextManager
 from playerConsole import PlayerConsole
 from serializable import Serializable
-import weakref
+from eventRegistry import Event
+from eventRegistry import EventRegistry
 
 
 class Inventory(Serializable):
     INV_SIZE_X = 10
     INV_SIZE_Y = 3
+    BASE_EVENT_TYPE = 'inv_'
 
     def __init__(self, **kwargs):
         self.items = kwargs.get("items",[[None]*3 for _ in range(10)])
         self.hotbar = kwargs.get("hotbar",[None]*10)
         self.hotbarSelection = kwargs.get("hotbarSelection",0)
-
-        #Creating a blank weakref
-        o = Item()
-        self.playerCharacter = weakref.ref(o)
-        del(o)
         
         self.update()
 
     def addItem(self, item):
+        EventRegistry.registerEvent(Event(
+            Inventory.BASE_EVENT_TYPE + 'add',
+            {'item':item}
+            ))
         for x in range(Inventory.INV_SIZE_X):
             if self.hotbar[x] != None and self.hotbar[x].name == item.name:
                 self.hotbar[x].quantity += item.quantity
@@ -40,6 +41,10 @@ class Inventory(Serializable):
                     return
 
     def removeItem(self, item):
+        EventRegistry.registerEvent(Event(
+            Inventory.BASE_EVENT_TYPE + 'remove',
+            {'item':item}
+            ))
         for x in range(Inventory.INV_SIZE_X):
             if self.hotbar[x] == item:
                 self.hotbar[x] = None
@@ -54,6 +59,11 @@ class Inventory(Serializable):
         """
         NOTE: Takes an item NAME as the 'item' param, not an Item object.
         """
+        EventRegistry.registerEvent(Event(
+            Inventory.BASE_EVENT_TYPE + 'remove_quantity',
+            {'item_name':item,
+            'quantity':quantity}
+            ))
         quantityRemoved = 0;
         for x in range(Inventory.INV_SIZE_X):
             if self.hotbar[x] is not None and self.hotbar[x].name == item:
@@ -80,18 +90,30 @@ class Inventory(Serializable):
                         return
 
     def removeHotbarItem(self,item):
+        EventRegistry.registerEvent(Event(
+            Inventory.BASE_EVENT_TYPE + 'remove',
+            {'item':item}
+            ))
         for x in range(Inventory.INV_SIZE_X):
             if self.hotbar[x] == item:
                 self.hotbar[x] = None
                 return
 
     def placeItem(self, item, pos):
+        EventRegistry.registerEvent(Event(
+            Inventory.BASE_EVENT_TYPE + 'add',
+            {'item':item}
+            ))
         if isinstance(item,Item):
             oldItem = self.items[int(pos[0])][int(pos[1])]
             self.items[int(pos[0])][int(pos[1])] = item
             return oldItem
 
     def placeItemInHotbar(self, item, pos):
+        EventRegistry.registerEvent(Event(
+            Inventory.BASE_EVENT_TYPE + 'add',
+            {'item':item}
+            ))
         if isinstance(item,Item):
             oldItem = self.hotbar[pos[0]]
             self.hotbar[pos[0]] = item
@@ -116,6 +138,10 @@ class Inventory(Serializable):
 
 
     def addItemToHotbar(item):
+        EventRegistry.registerEvent(Event(
+            Inventory.BASE_EVENT_TYPE + 'add',
+            {'item':item}
+            ))
         for x in range(INV_SIZE_X):
             if hotbar[x] == None:
                 hotbar[x] = item
@@ -134,21 +160,3 @@ class Inventory(Serializable):
                 if self.hotbar[x] is not None:
                     self.hotbar[x].update()
 
-    def craftingNotification(self,recipe):
-        offsetY = 0
-        offsetPerNotification = 10
-
-        if self.playerCharacter() is None:
-            return
-        for item in recipe.products:
-            item = Item(item)
-            item.quantity = recipe.products[item.name]
-#            FloatingTextManager.ACTIVE_FLOATING_TEXTS.append(FloatingText(
-#                    "+" + str(item.quantity) + " " + item.name,
-#                    (self.playerCharacter().fPos[0], self.playerCharacter().fPos[1] + offsetY),
-#                    vert_speed = -1,
-#                    hor_speed = -1,
-#                    alpha_decay = 5,
-#                    lifetime = 50))
-            offsetY += offsetPerNotification
-            PlayerConsole.registerNewEvent("You crafted " + str(item.quantity) + " " + item.name + "(s)!", (255,0,0,255))

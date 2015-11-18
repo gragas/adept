@@ -4,6 +4,8 @@ from recipeManager import RecipeManager
 from item import Item
 import pygame
 import os
+from eventRegistry import EventRegistry 
+from eventRegistry import Event
 
 class CraftingUI:
 
@@ -101,7 +103,9 @@ class CraftingUI:
                     newItem = Item(item)
                     newItem.quantity = clickedRecipe.products[item]
                     self.inventory.addItem(newItem)
-                self.inventory.craftingNotification(clickedRecipe)
+                EventRegistry.registerEvent(Event(
+                    "craft",
+                    {"recipe":clickedRecipe}))
                 self.inventory.update()
                 self.updateRecipeTable()
                 return

@@ -16,10 +16,9 @@ class TestMainMenu:
 
 	def test_load_scene_with_no_characters(self):
 		m = Menu()
-		utils.set_scene(m)
 		if os.path.isdir("characters"):
 			shutil.rmtree("characters")
+		utils.set_scene(m)
 		m.getCharacterNames()
 		m.go_to_gameTestScene()
 		assert utils.scene is m
-

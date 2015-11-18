@@ -1,8 +1,12 @@
 from buffalo import utils
 from biome import Biome
-utils.init()
+from nose.tools import with_setup
+import pygame
 
-class TestBiome:
-	def test_init(self):
-		b = Biome.GenerateBiomeDefs()
-		assert len(b) >= 9
+def init():
+	utils.init()
+
+@with_setup(init)
+def test_init():
+	b = Biome.GenerateBiomeDefs()
+	assert len(b) >= 9
