@@ -8,8 +8,9 @@ from buffalo import utils
 
 from camera import Camera
 from character import Character
+from quadTree import QuadTree
 
-class NPC(Character):
+class NPC(Character, QuadTree):
 
     # Superclass for every non-player character
     # Animation is pretty much copied from PlayerCharacter (with some changes to save space)
@@ -58,7 +59,7 @@ class NPC(Character):
             elif xv < 0 and abs(xv) > abs(yv):
                 self.direction = "l"
         else:
-        	self.direction = None
+            self.direction = None
 
     def update(self):
         if self.sprite_key is not "u" and self.direction is "u":
@@ -114,3 +115,19 @@ class NPC(Character):
         self.sprite = self.sprites[self.sprite_key][self.sprite_indx]
         self.surface.fill((0, 0, 0, 0))
         self.surface.blit(self.sprite, (0, 0))
+        
+    def detectCollision(self, characterList):
+        self.npcList = characterList
+        for npc in self.npcList:
+            if npc.intersect_rect(self, 4, 5) == self.intersect_rect(self, 4, 5):
+                self.collisionList+=npc
+            if npc.intersect_circle(self, 3) == self.intersect_circle(self, 3):
+                self.collisionList+=npc
+        self.collisionList = self.collisionList.merge()
+        for c in self.collisionList:
+            if c.direction == "l" | c.direction == "r":
+                #if about to collide left or right, change one NPC direction to go up
+                c.direction = "u"
+            elif c.direction == "u" | c.direction == "d":
+                #if about to collide up or down, change one NPC direction to go right
+                c.direction = "r"

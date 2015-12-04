@@ -2,8 +2,10 @@ import os
 #from multiprocessing import Process, Queue
 from threading import Thread
 from Queue import Queue
+from entityManager import EntityManager
 
 from buffalo import utils
+
 
 class MapManager:
     """
@@ -88,7 +90,7 @@ class MapManager:
             if MapManager.lru_chunks[key] == 0:
                 if key in MapManager.loaded_chunks.keys():
                     del MapManager.loaded_chunks[key]
-                del MapManger.lru_chunks[key]
+                del MapManager.lru_chunks[key]
 
     @staticmethod
     def soft_load_reader():
