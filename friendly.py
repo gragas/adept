@@ -16,7 +16,7 @@ class Friendly(NPC):
 		NPC.__init__(self, name=name, fPos=fPos, speed = speed, spawn=kwargs.get("spawn"))
 		self.currentDirection = random.random() * 2 * math.pi
 
-	def update(self):
+	def update(self, submaps):
 		self.currentDirection += random.random() * .5 - .25
-		self.move(self.currentDirection)
+		self.move(submaps, self.currentDirection)
 		NPC.update(self)

@@ -114,9 +114,9 @@ class GameTestScene(Scene):
         self.pc.update(keys, subMaps)
         for npc in self.npcs:
             if npc.__class__.__name__ is "Enemy":
-                npc.update(self.pc.fPos)
+                npc.update(self.pc, subMaps)
             elif npc.__class__.__name__ is "Friendly":
-                npc.update()
+                npc.update(subMaps)
             elif npc.__class__.__name__ is "Trader":
                 npc.update(self.pc.inventory, self.UIManager)
         self.UIManager.update()

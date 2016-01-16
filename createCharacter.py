@@ -39,6 +39,7 @@ class CreateCharacter(Scene):
                                 "name",
                                 y_centered=True,
                                 x_centered=True,
+                                max_chars=20,
                         )
                 self.inputs.add(self.characterName)
                 self.labels.add(

@@ -3,9 +3,11 @@ import os
 import os.path
 
 import pygame
+import pygame.image
 
 from buffalo import utils
 
+from subMap import SubMap
 from camera import Camera
 from character import Character
 
@@ -18,12 +20,13 @@ class NPC(Character):
     # For testing purposes, the Enemy follows you, Friendly goes around randomly, and
     # Trader just stands there
 
-    def __init__(self, name=None, fPos=None, size=None, level=None, **kwargs):
+    def __init__(self, name=None, fPos=None, size=None, level=None, zLevel=0, **kwargs):
         self.level = level if level is not None else 0
         Character.__init__(self, name=name, fPos=fPos, size=size, spawn=kwargs.get('spawn'))
         self.speed = kwargs.get('speed') if kwargs.get('speed') is not None else .1
         self.surface = utils.empty_surface(self.size)
         self.pos = int(self.fPos[0]),int(self.fPos[1])
+        self.zLevel = zLevel
         self.direction = None
         self.sprites = {
             "i": list(), # idle
@@ -40,11 +43,47 @@ class NPC(Character):
         self.animation_delta = int((1.0 / self.speed) * 10.5)
 
     # General movement method for all NPCs. Takes a direction and goes
-    def move(self, direction=0):
-        if direction is not None:
+    def move(self, submaps, direction=0.0):
+        if direction is not 0:
             x, y = self.fPos
             xv = self.speed * math.cos(direction) * utils.delta
             yv = self.speed * math.sin(direction) * utils.delta
+            xn = x + xv
+            yn = y + yv
+            if submaps is not None:
+                for submap in submaps:
+                    npcRect = pygame.Rect((xn, yn), (self.surface.get_size()[0],self.surface.get_size()[1]))
+                    collideRect = pygame.Rect(submap.pos[0],submap.pos[1],submap.size[0]*SubMap.TILE_SIZE, submap.size[1]*SubMap.TILE_SIZE)
+                    if collideRect.colliderect(npcRect):
+                        for tile in submap.tileMap:
+                            if tile.collisionEnabled and tile.pos[2] == self.zLevel:
+                                tileSize = SubMap.TILE_SIZE
+                                tileRect = pygame.Rect(submap.pos[0] + tile.pos[0] * tileSize, submap.pos[1] + tile.pos[1] * tileSize, tileSize, tileSize)
+                                if tileRect.colliderect(npcRect):
+                                    if y < tileRect.bottom and y + self.size[1] > tileRect.top and x > tileRect.right and xn < tileRect.right and xv < 0:
+                                        xv = 0
+                                        if yv > 0:
+                                            yv = self.speed*utils.delta
+                                        elif yv < 0:
+                                            yv = -self.speed*utils.delta
+                                    elif y < tileRect.bottom and y + self.size[1] > tileRect.top and x + self.size[0] < tileRect.left and xn + self.size[0] > tileRect.left and xv > 0:
+                                        xv = 0
+                                        if yv > 0:
+                                            yv = self.speed*utils.delta
+                                        elif yv < 0:
+                                            yv = -self.speed*utils.delta
+                                    elif x < tileRect.right and x + self.size[0] > tileRect.left and y + self.size[1] < tileRect.top and yn + self.size[1] > tileRect.top and yv > 0:
+                                        yv = 0
+                                        if xv > 0:
+                                            xv = self.speed*utils.delta
+                                        elif xv < 0:
+                                            xv = -self.speed*utils.delta
+                                    elif x < tileRect.right and x + self.size[0] > tileRect.left and y > tileRect.bottom and yn < tileRect.bottom and yv < 0:
+                                        yv = 0
+                                        if xv > 0:
+                                            xv = self.speed*utils.delta
+                                        elif xv < 0:
+                                            xv = -self.speed*utils.delta
             x += xv
             y += yv
             self.fPos = x, y
