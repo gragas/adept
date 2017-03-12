@@ -2,8 +2,6 @@ import pygame
 
 from buffalo import utils
 
-from menu import Menu
-
 def main():
     
     while not utils.end:
@@ -21,6 +19,8 @@ if __name__ == "__main__":
         pygame.quit()
         exit()
     
+    from menu import Menu
+
     utils.set_scene( Menu() )
     
     main()

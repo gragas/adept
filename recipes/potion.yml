@@ -1,0 +1,11 @@
+components: 
+  dagger: 1
+  book: 2
+requirements:
+  level:
+    magic: 4
+    crafting: 3
+  tool:
+    "brewing_station"
+products:
+  axe: 2
