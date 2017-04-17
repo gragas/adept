@@ -27,3 +27,4 @@ def test_success_recipe():
 	i.addItem(Item("stone",quantity=5))
 	r = RecipeManager.getRecipe("pickaxe")
 	assert r.canCraft(i) == True
+	

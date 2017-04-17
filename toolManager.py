@@ -74,3 +74,4 @@ class ToolManager(object):
         ToolManager.effect_state = effect_state
         ToolManager.set_func_state(ToolManager.func_state)
         ToolManager.set_effect_state(ToolManager.effect_state)
+        

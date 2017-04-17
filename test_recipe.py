@@ -15,3 +15,4 @@ def teardown():
 def test_manager():
 	RecipeManager.loadRecipes()
 	assert len(RecipeManager.RECIPES) > 0
+	

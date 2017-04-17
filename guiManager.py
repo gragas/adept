@@ -126,3 +126,4 @@ class GUIManager:
 			newPos = (pygame.mouse.get_pos()[0] - InventoryUI.BUTTON_SIZE / 2, 
 				pygame.mouse.get_pos()[1] - InventoryUI.BUTTON_SIZE / 2)
 			dest.blit(self.draggedItem.surface, newPos)
+			

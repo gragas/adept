@@ -36,3 +36,4 @@ class Trader(Friendly):
 			manager.deregisterGUI(self.tradeUI)
 			self.active = False
 			self.tradeUI = None
+			

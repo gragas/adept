@@ -146,3 +146,4 @@ class TextWrapper:
             wrapped.append(stext.strip())
             text = text[nl:]
         return wrapped
+        

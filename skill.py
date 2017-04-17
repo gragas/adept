@@ -15,3 +15,4 @@ class Skill(Serializable):
 		if self.experience >= 500*self.level:
 			self.level += 1
 			self.experience %= (500*self.level)
+			

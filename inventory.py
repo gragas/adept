@@ -159,4 +159,3 @@ class Inventory(Serializable):
                     self.hotbar[x] = None
                 if self.hotbar[x] is not None:
                     self.hotbar[x].update()
-

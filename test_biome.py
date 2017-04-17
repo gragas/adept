@@ -10,3 +10,4 @@ def init():
 def test_init():
 	b = Biome.GenerateBiomeDefs()
 	assert len(b) >= 9
+	

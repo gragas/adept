@@ -26,7 +26,6 @@ class Chunk:
         This is the Chunk constructor.
         It creates a Chunk at the coordinates (<x>, <y>).
         <x> and <y> are positive or negative integers.
-
         self.pos  - a 2-tuple that stores the coordinates of the Chunk
         self.defs - a dictionary that stores definitions of tiles
                     self.defs' keys are specified in the file.

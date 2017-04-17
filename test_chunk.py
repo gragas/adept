@@ -21,3 +21,4 @@ class TestChunk:
 
 	def test_surface(self):
 		assert Chunk(0,0).surface is not None
+		

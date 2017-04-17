@@ -9,7 +9,6 @@ Class that generates tile data for the world map with a given seed.
 The generation algorithm uses Perlin noise to generate maps for both altitude and moisture.
 (This requires the 'noise' library)
 Based on the generated noise, biomes are determined.
-
 The algorithm is (and must be) deterministic for any discrete seed, as the whole
 game world will not be generated in a single call of the GenerateMap() function.
 Rather, chunks may be requested from the generator using the map's seed, and the

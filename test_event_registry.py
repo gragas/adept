@@ -47,3 +47,4 @@ def test_flexible_events():
 	EventRegistry.registerEvent(e)
 	assert hasattr(l, 'result') and l.result == True
 	EventRegistry.clearListeners()
+	

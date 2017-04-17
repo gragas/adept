@@ -29,3 +29,4 @@ class Saves: #Only partially implemembted- only works for PlayerCharacters
 				saved = json.load(f)
 			return Serializable.deserialize(saved)
 		return None
+		

@@ -13,3 +13,4 @@ class Stair(Tile):
 			else:
 				pc.zLevel -= 1
 			return True
+			

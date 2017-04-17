@@ -63,4 +63,3 @@ def test_render_labels_overload():
     assert height <= PlayerConsole.tray.surface.get_height()
     assert PlayerConsole.renderTextsToSurface(texts,height).get_size()[0] == PlayerConsole.tray.surface.get_width()
     assert PlayerConsole.renderTextsToSurface(texts,height).get_size()[1] <= PlayerConsole.tray.surface.get_height()
-

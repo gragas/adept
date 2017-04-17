@@ -71,3 +71,4 @@ class FloatingTextManager:
         for fText in FloatingTextManager.ACTIVE_FLOATING_TEXTS:
             fText.render()
             fText.blit(utils.screen,(fText.pos[0] - Camera.pos[0],fText.pos[1] - Camera.pos[1]))
+            

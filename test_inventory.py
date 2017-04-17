@@ -65,3 +65,4 @@ class TestInventory:
 		i.placeItem(t2, (2,2))
 
 		assert i.getTotalItemQuantity("test") == quantity1 + quantity2
+		

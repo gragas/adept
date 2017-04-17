@@ -81,3 +81,4 @@ def test_getItemFromGUIPos():
 	assert ui.getItemFromGUIPos(ui.getGUIPosFromItemPos((2,2))) == item2
 	assert ui.getItemFromGUIPos(ui.getGUIPosFromItemPos((5,1))) == item3
 	assert ui.getItemFromGUIPos(ui.getGUIPosFromItemPos((1,1))) is None
+	

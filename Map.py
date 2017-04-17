@@ -50,5 +50,3 @@ class Map:
             os.makedirs(os.path.join(*LOAD_PATH))
         files = [f for f in os.listdir(os.path.join(*LOAD_PATH)) if os.path.isfile(os.path.join(*list(LOAD_PATH + [f])))]
         self.chunk_files = [os.path.join(*list(LOAD_PATH + [f])) for f in files if f.endswith(".smap")]
-
-

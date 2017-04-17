@@ -26,3 +26,4 @@ class Trade():
 			if inventory.getTotalItemQuantity(item) < self.price[item]:
 				return False
 		return True
+		

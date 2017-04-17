@@ -89,3 +89,4 @@ def test_update():
 	g.registerGUI(t)
 	g.updateGUIs()
 	assert t.updated
+	

@@ -37,3 +37,4 @@ class InventoryUtils:
                        lifetime = 50))
             offsetY += offsetPerNotification
             PlayerConsole.registerNewEvent("You crafted " + str(item.quantity) + " " + item.name + "(s)!", color=(255,0,0,255))
+            

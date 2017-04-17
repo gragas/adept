@@ -63,3 +63,4 @@ def test_lifetime_removal():
     t.lifetime_counter = 5001
     FloatingTextManager.update()
     assert len(FloatingTextManager.ACTIVE_FLOATING_TEXTS) == currLen - 1
+    

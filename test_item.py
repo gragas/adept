@@ -28,3 +28,4 @@ class TestItem:
     def test_item_render(self):
     	i = Item("test")
     	i.renderItemQuantity()
+    	

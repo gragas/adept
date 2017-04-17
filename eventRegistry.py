@@ -43,3 +43,4 @@ class Event:
 			return
 		self.type = _type
 		self.info = info
+		
